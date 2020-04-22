@@ -9,8 +9,8 @@ const app = express();
 
 //My Routes
 const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/user');
-const jobRoutes = require('./routes/jobs');
+// const userRoutes = require('./routes/user');
+// const jobRoutes = require('./routes/jobs');
 
 
 //Connecting Mongoose-mongodb
@@ -27,13 +27,14 @@ mongoose.connect(process.env.DATABASE, {
 
 //connecting the middlewares
 app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(cors());
 
 //My routes
 app.use("/api", authRoutes);
-app.use("/api", userRoutes);
-app.use("/api",jobRoutes);
+// app.use("/api", userRoutes);
+// app.use("/api",jobRoutes);
 
 
 //Connecting the app
