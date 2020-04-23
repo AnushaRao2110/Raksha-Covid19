@@ -7,7 +7,7 @@ const Base = ({ children }) => {
   return (
     <div>
       <Navbar />
-      <div className="container-fluid">
+      <div className="">
         <div>{children}</div>
       </div>
       <Footer />

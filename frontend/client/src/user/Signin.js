@@ -1,21 +1,21 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Base from '../core/Base';
-import {Link,Redirect} from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { signin, authenticate, isAutheticated } from "../auth/helper";
 
 const SignIn = () => {
 
-    const [values, setValues] = useState({
-        email: "",
-        password: "",
-        error: "",
-        loading: false,
-        didRedirect: false,
-        success: false
-      });
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+    error: "",
+    loading: false,
+    didRedirect: false,
+    success: false
+  });
 
-      const { email, password, error, loading, didRedirect,success } = values;
+  const { email, password, error, loading, didRedirect, success } = values;
   const { user } = isAutheticated();
 
   const handleChange = name => event => {
@@ -28,14 +28,17 @@ const SignIn = () => {
     signin({ email, password })
       .then(data => {
         if (data.error) {
-          setValues({ ...values, error: data.error, loading: false,success:false});
+          setValues({ ...values, error: data.error, loading: false, success: false });
         } else {
           authenticate(data, () => {
             setValues({
               ...values,
               didRedirect: true,
-              success:true
+              success: true
             });
+            setTimeout(() => {
+              window.location = '/';
+            }, 400);
           });
         }
       })
@@ -72,28 +75,28 @@ const SignIn = () => {
     );
   };
 
-    const signInForm = ()=>{
-        return(
-            <div className="login-clean">
-            <form method>
-                {/* <h2 className="sr-only">Login Form</h2> */}
-                <div className="illustration"><i className="fa fa-users"></i>
-                    <h1>Login Here</h1>
-                </div>
-                <div className="form-group"><select className="form-control"><option  disabled>Login As</option><option value="1">Hospital</option><option value="2">Supplier</option></select></div>
-                <div className="form-group"><input className="form-control" onChange={handleChange("email")} type="email" name="email" placeholder="Email" value={email}/></div>
-                <div className="form-group"><input className="form-control" onChange={handleChange("password")} type="password" name="password" placeholder="Password" value={password}/></div>
-                <div className="form-group"><button className="btn btn-primary btn-block" type="submit" onClick={onSubmit}>Log In</button></div><a className="forgot" href="#">Forgot your email or password?</a><a className="forgot my-2" href="#">New User ? Sign Up</a></form>
-        </div>
-        )
-    }
-    return(
-        <Base msg="Login page"> 
-            {successMessage()}
-            {errorMessage()}
-            {signInForm()}
-        </Base>
+  const signInForm = () => {
+    return (
+      <div className="login-clean">
+        <form method>
+          {/* <h2 className="sr-only">Login Form</h2> */}
+          <div className="illustration"><i className="fa fa-users"></i>
+            <h1>Login Here</h1>
+          </div>
+          <div className="form-group"><select className="form-control"><option disabled>Login As</option><option value="1">Hospital</option><option value="2">Supplier</option></select></div>
+          <div className="form-group"><input className="form-control" onChange={handleChange("email")} type="email" name="email" placeholder="Email" value={email} /></div>
+          <div className="form-group"><input className="form-control" onChange={handleChange("password")} type="password" name="password" placeholder="Password" value={password} /></div>
+          <div className="form-group"><button className="btn btn-primary btn-block" type="submit" onClick={onSubmit}>Log In</button></div><a className="forgot" href="#">Forgot your email or password?</a><a className="forgot my-2" href="#">New User ? Sign Up</a></form>
+      </div>
     )
+  }
+  return (
+    <Base msg="Login page">
+      {successMessage()}
+      {errorMessage()}
+      {signInForm()}
+    </Base>
+  )
 }
 
 export default SignIn;
