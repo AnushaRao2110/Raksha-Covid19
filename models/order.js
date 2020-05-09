@@ -1,26 +1,38 @@
-const { model, Schema } = require('mongoose');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const { ItemCartSchema } = require('../models/item-cart');
 
 
 const OrdersSchema = new Schema({
 
+    Hospital: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+    },
     Post: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref:'Post'
+        ref: 'Post'
     },
     Supplier: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref:'User'
+        ref: 'User'
     },
+    Item: [ItemCartSchema],
+
     DealPrice: {
-        type: Number
+        type: Number,
+        required: true
+    },
+    address: {
+        type: String,
+        required: true,
+    },
+
+},
+    {
+        timestamps: true
     }
-
-}, {
-    timestamps: true
-}
 );
-const OrderModel = model('Order', OrdersSchema);
-
-module.exports = { OrderModel }
+module.exports = mongoose.model('Order', OrdersSchema);

@@ -1,26 +1,26 @@
-const { model, Schema } = require('mongoose');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 ////EACH ITEM HERE
 const ItemSchema = new Schema({
     name: {
         type: String,
         required: true
+    },
+    image: {
+        data: Buffer,
+        contentType: String
+    },
+    tags : {
+        type : [String],    
+        text : true
     }
-}, {
-    timestamps: true
-}
+},
+    {
+        timestamps: true
+    }
 );
-const Item = model('Item', ItemSchema);
 
+ItemSchema.path('tags').index({text:true});
 
-////ITEM CART HERE
-const ItemCartSchema = new Schema({
-    item: { type: Schema.Types.ObjectId, ref: 'Item', required: true },
-    quantity: { type: Number, required: true },
-    expectedPrice: { type: Number }
-});
-
-const ItemCart = model('ItemCart', ItemCartSchema);
-
-
-module.exports = { Item, ItemSchema, ItemCartSchema, ItemCart }
+module.exports = mongoose.model('Item', ItemSchema);

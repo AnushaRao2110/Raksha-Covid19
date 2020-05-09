@@ -8,11 +8,12 @@ const SignUp = () => {
     name: "",
     email: "",
     password: "",
+    role:0,
     error: "",
     success: false,
   });
 
-  const { name, email, password, error, success } = values;
+  const { name, email, password, role, error, success } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -21,7 +22,7 @@ const SignUp = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false });
-    signup({ name, email, password })
+    signup({ name, email, password, role })
       .then((data) => {
         if (data.error) {
           setValues({ ...values, error: data.error, success: false });
@@ -31,6 +32,7 @@ const SignUp = () => {
             name: "",
             email: "",
             password: "",
+            role: 0,
             error: "",
             success: true,
           });
@@ -49,12 +51,15 @@ const SignUp = () => {
             <h1>Register Here</h1>
           </div>
           <div className="form-group">
-            <select className="form-control">
-              <option disabled>
+            <select className="form-control" 
+            name="role"
+            onChange={handleChange("role")}
+            >
+              <option disabled selected>
                 Register As
               </option>
-              <option value="1">Hospital</option>
-              <option value="2">Supplier</option>
+              <option value={0}>Hospital</option>
+              <option value={1}>Supplier</option>
             </select>
           </div>
           <div className="form-group">

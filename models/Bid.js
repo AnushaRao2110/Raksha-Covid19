@@ -1,4 +1,5 @@
-const { model, Schema } = require('mongoose');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 
 const BidSchema = new Schema({
@@ -12,16 +13,23 @@ const BidSchema = new Schema({
         required: true,
         ref: 'User'
     },
-    DealPrice: {
-        type: Number
-    }
+    Item: [
+        {
+            item: {
+                type: Schema.Types.ObjectId,
+                ref: 'Item',
+                required: true
+            },
+            DealPrice: {
+                type: Number
+            }
+        }
+    ]
+
 }, {
     timestamps: true
 });
 
+const BidModel = mongoose.model('Bid', BidSchema);
 
-
-
-const BidModel = model('Bid', BidSchema);
-
-module.exports = { BidModel, BidSchema }
+module.exports = { BidSchema, BidModel };

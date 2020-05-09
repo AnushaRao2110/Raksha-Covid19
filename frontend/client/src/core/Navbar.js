@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
-import { isAutheticated, signout } from "../auth/helper";
+import { signout, isAuthenticated } from "../auth/helper/index";
 
 const currentTab = (history, path) => {
   if (history.location.pathname === path) {
@@ -26,10 +26,17 @@ const Navbar = ({ history }) => {
           className="collapse navbar-collapse" id="navcol-1">
           <ul className="nav navbar-nav ml-auto">
             <li className="nav-item" role="presentation"><Link style={currentTab(history, '/')} className="nav-link" to="/">Home</Link></li>
-            {!isAutheticated() ? (<li className="nav-item" role="presentation"><Link style={currentTab(history, '/signin')} className="nav-link" to="/signin">Login</Link></li>) : null}
-            {!isAutheticated() ? (<li className="nav-item" role="presentation"> <Link style={currentTab(history, '/signup')} className="nav-link" to="/signup">SignUp</Link></li>) : null}
-            {isAutheticated() ? (<li className="nav-item" role="presentation"> <Link style={currentTab(history, '/signout')} className="nav-link" onClick={() => signout()}>Signout</Link></li>) : null}
-            <li className="nav-item" role="presentation"><Link style={currentTab(history, '/signout')} className="nav-link" to="/signout">Contact Us</Link></li>
+            {!isAuthenticated() ? (<li className="nav-item" role="presentation"><Link style={currentTab(history, '/signin')} className="nav-link" to="/signin">Login</Link></li>) : null}
+            {!isAuthenticated() ? (<li className="nav-item" role="presentation"> <Link style={currentTab(history, '/signup')} className="nav-link" to="/signup">SignUp</Link></li>) : null}
+            {isAuthenticated() && (isAuthenticated().user.role === 0 ) ? (<li className="nav-item" role="presentation"> <Link style={currentTab(history, '/items')} className="nav-link" to="/items">Browse</Link></li>) : null}
+            {isAuthenticated() && (isAuthenticated().user.role === 0 || isAuthenticated().user.role === 1) ? (<li className="nav-item" role="presentation"> <Link style={currentTab(history, '/user/dashboard')} className="nav-link" to="/user/dashboard">My Profile</Link></li>) : null}
+            {isAuthenticated() && (isAuthenticated().user.role === 0 ) ? (<li className="nav-item" role="presentation"> <Link style={currentTab(history, '/cart')} className="nav-link" to="/cart">Cart</Link></li>) : null}
+            {isAuthenticated() ? (<li className="nav-item" role="presentation"> <Link style={currentTab(history, '/signout')} className="nav-link" onClick={() => {
+              signout(() => {
+                history.push('/');
+              });
+            }}> Signout</Link></li>) : null}
+            <li className="nav-item" role="presentation"><Link style={currentTab(history, '/')} className="nav-link" to="/signout">Contact Us</Link></li>
           </ul>
         </div>
       </div>

@@ -1,26 +1,25 @@
-const { model, Schema } = require('mongoose');
-const { ItemCartSchema } = require('./Item');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const {ItemCartSchema} = require('./item-cart');
+const {BidSchema} = require('../models/Bid');
 
 const PostSchema = new Schema({
 
-    Item: [ItemCartSchema]
-    ,
+    Item: [ItemCartSchema],
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    tags: {
-        type: [String],
-        index: true
-    },
-    bids:[BidSchema]
+    bids:[{
+        bidId : {
+            type: Schema.Types.ObjectId,
+            ref : 'Bid'
+        }
+    }]
 }, {
     timestamps: true
 }
 );
 
-const PostModel = model('Post', PostSchema);
-
-
-module.exports = { PostModel, PostSchema }
+module.exports = mongoose.model('Post', PostSchema);

@@ -19,7 +19,7 @@ exports.getUser = (req,res)=>{
     return res.json(req.profile);
 }
 
-/* exports.getAllUsers = (req,res,next)=>{
+ exports.getAllUsers = (req,res,next)=>{
     User.find().exec((err,users)=>{
         if(err || !users)
         {
@@ -30,18 +30,18 @@ exports.getUser = (req,res)=>{
 
         res.json(users);
     })
-} */
+}
 
 exports.updateUser = (req,res)=>{
     User.findByIdAndUpdate(
         {_id: req.profile._id},
         {$set: req.body}, //updates everything in the body
-        {new: true, useFindandModify: false},
+        {new: true, useFindandModify: false},  //new:true returns new updated item
         (err,user)=>{
             if(err || !user)
             {
                 return res.status(400).json({
-                    error:"User Not authorised to update this user"
+                    error:"Unauthorised to update this user"
                 })
             }
             //since we are getting an user here we will update the user not req.profile

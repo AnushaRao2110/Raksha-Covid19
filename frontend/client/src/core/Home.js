@@ -4,9 +4,8 @@ import "../styles.css";
 import Base from "./Base";
 
 const Home = () => {
-  console.log("API is http://localhost:5000/api/");
   return (
-    <Base msg="Home page">
+    <Base>
       <section id="hero" className="d-flex align-items-center">
         <div className="carousel slide w-100" data-ride="carousel" id="carousel-1" style={{ height: '100%' }}>
           <div className="carousel-inner" role="listbox" style={{ height: '100%' }}>

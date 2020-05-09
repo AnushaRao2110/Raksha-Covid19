@@ -2,8 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-const Base = ({ children }) => {
-  console.log("API is http://localhost:5000/api/");
+const Base = ({children }) => {
   return (
     <div>
       <Navbar />

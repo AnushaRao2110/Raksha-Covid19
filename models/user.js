@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const crypto = require('crypto');
 const uuidv1 = require('uuid/v1');
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
 
     name: {
         type: String,
@@ -41,11 +42,20 @@ const userSchema = new mongoose.Schema({
     //Only for Hospitals
     Posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
 
-    //This is for both HOspital and Suppliers
+    //This is for both Hospital and Suppliers
     OrderHistory: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order'
-    }]
+    }],
+
+    cart: [
+        {
+            itemId: {
+                type: Schema.Types.ObjectId,
+                ref: 'Item'
+            }
+        }
+    ]
 },
     {
         timestamps: true //this timestamp records the time of entry in the db

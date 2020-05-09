@@ -9,11 +9,13 @@ const app = express();
 
 //My Routes
 const authRoutes = require('./routes/auth');
-// const userRoutes = require('./routes/user');
-// const jobRoutes = require('./routes/jobs');
+const userRoutes = require('./routes/user');
+const itemRoutes = require('./routes/item');
+const postRoutes = require('./routes/post');
+const bidRoutes = require('./routes/bid');
+const orderRoutes = require('./routes/order');
+const cartRoutes = require('./routes/cart');
 
-
-//Connecting Mongoose-mongodb
 mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -27,18 +29,22 @@ mongoose.connect(process.env.DATABASE, {
 
 //connecting the middlewares
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
 //My routes
 app.use("/api", authRoutes);
-// app.use("/api", userRoutes);
-// app.use("/api",jobRoutes);
+app.use("/api", userRoutes);
+app.use("/api", itemRoutes);
+app.use("/api", postRoutes);
+app.use("/api", bidRoutes);
+app.use("/api", orderRoutes);
+app.use("/api", cartRoutes);
 
 
 //Connecting the app
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Listening on Port: ${port}`);
-})
+})  
